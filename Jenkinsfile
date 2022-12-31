@@ -18,14 +18,14 @@ pipeline{
             }
         }
         stage("sonarQube Quality Gate analysis"){     
-            agent {
-                docker {
-                    image 'openjdk:11'
-                }
-            }
+            // agent {
+            //     docker {
+            //         image 'openjdk:11'
+            //     }
+            // }
             steps{
                 script{
-                    
+
                     // withSonarQubeEnv(credentialsId: 'sonarQubeToken') {
                     //     sh 'chmod +x gradlew'
                     //     sh './gradlew sonarqube'
@@ -36,6 +36,12 @@ pipeline{
                     //        error "Pipeline aborted due to quality gate failure: ${qg.status}"
                     //   }
                     // }
+
+
+                    // This step should not normally be used in your script. Consult the inline help for details.
+                    withDockerContainer(image: 'openjdk:11', toolName: 'Docker') {
+                        // some block
+                    }
 
                     waitForQualityGate abortPipeline: false, credentialsId: 'sonarQubeToken'
 
