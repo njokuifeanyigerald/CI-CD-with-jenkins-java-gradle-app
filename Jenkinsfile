@@ -17,21 +17,18 @@ pipeline{
                 }
             }
         }
-        stage("sonarQube Quality Gate analysis"){
-            steps{
-                echo "====++++executing sonarQube analysis++++===="
-                agent {
-                    docker {
-                        image 'openjdk:11'
-                    }
+        stage("sonarQube Quality Gate analysis"){     
+            agent {
+                docker {
+                    image 'openjdk:11'
                 }
+            }
+            steps{
                 script{
                     withSonarQubeEnv(credentialsId: 'sonarQubeToken') {
                         sh 'chmod +x gradlew'
                         sh './gradlew sonarqube'
                     }
-                
-
                     timeout(time: 1, unit: 'HOURS') {
                       def qg = waitForQualityGate()
                       if (qg.status != 'OK') {
