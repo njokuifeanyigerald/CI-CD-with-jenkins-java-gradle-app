@@ -26,24 +26,15 @@ pipeline{
             steps{
                 script{
 
-                    // withSonarQubeEnv(credentialsId: 'sonarQubeToken') {
-                    //     sh 'chmod +x gradlew'
-                    //     sh './gradlew sonarqube'
-                    // }
-                    // timeout(time: 1, unit: 'HOURS') {
-                    //   def qg = waitForQualityGate()
-                    //   if (qg.status != 'OK') {
-                    //        error "Pipeline aborted due to quality gate failure: ${qg.status}"
-                    //   }
-                    // }
-
-
-                    // This step should not normally be used in your script. Consult the inline help for details.
-                    withDockerContainer(image: 'openjdk:11', toolName: 'Docker') {
-                        // some block
+                    withSonarQubeEnv(credentialsId: 'sonarQubeToken') {
+                        sh 'chmod +x gradlew'
+                        sh './gradlew sonarqube'
                     }
-
-                    waitForQualityGate abortPipeline: false, credentialsId: 'sonarQubeToken'
+                    timeout(time: 1, unit: 'HOURS') {
+                      def qg = waitForQualityGate()
+                      if (qg.status != 'OK') {
+                           error "Pipeline aborted due to quality gate failure: ${qg.status}"
+                      }
 
                 } 
             }
