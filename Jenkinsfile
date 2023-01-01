@@ -1,5 +1,10 @@
 pipeline{
     // agent any
+    agent {
+        docker {
+            image 'openjdk:11'
+        }
+    }
     stages{
         stage("github repo"){
             steps{
@@ -18,11 +23,7 @@ pipeline{
             }
         }
         stage("sonarQube Quality Gate analysis"){     
-            agent {
-                docker {
-                    image 'openjdk:11'
-                }
-            }
+            
             
             steps{
                 script{
