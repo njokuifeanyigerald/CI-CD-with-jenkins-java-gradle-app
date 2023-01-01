@@ -20,7 +20,7 @@ pipeline{
         stage("sonarQube Quality Gate analysis"){     
             agent {
                 docker {
-                    image 'openjdk:latest'
+                    image 'openjdk:11.0'
                 }
             }
             steps{
