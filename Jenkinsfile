@@ -1,5 +1,5 @@
 pipeline{
-    agent any
+    // agent any
     stages{
         stage("github repo"){
             steps{
@@ -18,18 +18,15 @@ pipeline{
             }
         }
         stage("sonarQube Quality Gate analysis"){     
-            // agent {
-            //     docker {
-            //         image 'openjdk:11'
-            //     }
-            // }
-            // This step should not normally be used in your script. Consult the inline help for details.
+            agent {
+                docker {
+                    image 'openjdk:11'
+                }
+            }
             
             steps{
                 script{
-                    withDockerContainer(image: 'openjdk:11', toolName: 'Docker') {
-                        // some block
-                    }
+                    
 
                     withSonarQubeEnv(credentialsId: 'sonarQubeToken') {
                         sh 'chmod +x gradlew'
