@@ -18,16 +18,14 @@ pipeline{
             }
         }
         stage("sonarQube Quality Gate analysis"){     
-            agent {
-                docker {
-                    image 'openjdk:11'
-                }
-            }
+            // agent {
+            //     docker {
+            //         image 'openjdk:11'
+            //     }
+            // }
             
             steps{
                 script{
-                    
-
                     withSonarQubeEnv(credentialsId: 'sonarQubeToken') {
                         sh 'chmod +x gradlew'
                         sh './gradlew sonarqube'
