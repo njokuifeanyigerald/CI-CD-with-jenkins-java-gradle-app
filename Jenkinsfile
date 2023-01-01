@@ -18,10 +18,14 @@ pipeline{
             }
         }
         stage("sonarQube Quality Gate analysis"){     
-            agent {
-                docker {
-                    image 'openjdk:11'
-                }
+            // agent {
+            //     docker {
+            //         image 'openjdk:11'
+            //     }
+            // }
+            // This step should not normally be used in your script. Consult the inline help for details.
+            withDockerContainer(image: 'openjdk:11', toolName: 'Docker') {
+                // some block
             }
             steps{
                 script{
