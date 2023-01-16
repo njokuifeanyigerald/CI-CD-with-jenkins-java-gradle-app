@@ -6,9 +6,6 @@ pipeline{
                 git credentialsId: 'github-access', url: 'https://github.com/njokuifeanyigerald/CI-CD-with-jenkins-java-gradle-app.git'
             }
             post{
-                always{
-                    echo "========always========"
-                }
                 success{
                     echo "========github repo executed successfully========"
                 }
@@ -39,9 +36,6 @@ pipeline{
                 } 
             }
             post{
-                always{
-                    echo "====++++always++++===="
-                }
                 success{
                     echo "====++++sonarQube analysis executed successfully++++===="
                 }
@@ -51,11 +45,34 @@ pipeline{
         
             }
         }
+        stage("docker login to nexus "){
+            steps{
+                script{
+                    withCredentials([string(credentialsId: 'docker-nexus', variable: 'docker_password')]) {
+                        // some block
+                        '''
+                        docker build -t  localhost:8083/springapp:${VERSION} .
+                        docker login -u admin -p $docker_password localhost:8083
+                        docker push localhost:8083/springapp:${VERSION}
+                        docker rmi localhost:8083/springapp:${VERSION}
+                        '''
+                    }
+                    
+                }
+            }
+            post{
+                success{
+                    echo "====++++docker login to nexus  executed successfully++++===="
+                }
+                failure{
+                    echo "====++++docker login to nexus  execution failed++++===="
+                }
+        
+            }
+        }
+    
     }
     post{
-        always{
-            echo "========always========"
-        }
         success{
             echo "========pipeline executed successfully ========"
         }
