@@ -1,5 +1,10 @@
 pipeline{
     agent any 
+    environment{
+        
+        DATREE_TOKEN = credentials('DATREE_TOKEN')
+
+    }
     stages{
         stage("github repo"){
             steps{
@@ -78,11 +83,17 @@ pipeline{
         stage("Datree"){
             steps{
                 echo "====++++executing Datree++++===="
-                script{
-                    // syntax is  dir: change current directory
-                    dir('kubernetes/') {
-                        sh 'helm datree test myapp/'
-                    }
+                // script{
+                //     // syntax is  dir: change current directory
+                //     dir('kubernetes/') {
+                //         sh 'helm datree test myapp/'
+                //     }
+                // }
+                // script{
+                        withEnv(['DATREE_TOKEN=$DATREE_TOKEN']) {
+                              sh 'helm datree test kubernetes/myapp'
+                        }
+
                 }
             }
             post{
