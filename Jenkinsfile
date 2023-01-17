@@ -49,10 +49,17 @@ pipeline{
             steps{
                 script{
                     withCredentials([string(credentialsId: 'docker-nexus', variable: 'docker_password')]) {                        
-                       sh 'docker build -t  localhost:8083/springapp:$BUILD_ID .'
-                       sh 'docker login -u admin -p $docker_password localhost:8083'
-                        sh 'docker push localhost:8083/springapp:$BUILD_ID'
-                        sh 'docker rmi localhost:8083/springapp:$BUILD_ID'
+                    //    sh 'docker build -t  localhost:8083/springapp:$BUILD_ID .'
+                    //    sh 'docker login -u admin -p $docker_password localhost:8083'
+                    //     sh 'docker push localhost:8083/springapp:$BUILD_ID'
+                    //     sh 'docker rmi localhost:8083/springapp:$BUILD_ID'
+
+                        sh '''
+                            docker build -t  localhost:8083/springapp:$BUILD_ID .
+                            docker login -u admin -p $docker_password localhost:8083
+                            docker push localhost:8083/springapp:$BUILD_ID
+                            docker rmi localhost:8083/springapp:$BUILD_ID
+                        '''
                     
 
                     }
