@@ -60,8 +60,7 @@ pipeline{
                             docker push localhost:8083/springapp:$BUILD_ID
                             docker rmi localhost:8083/springapp:$BUILD_ID
                         '''
-                    
-
+                
                     }
                     
                 }
@@ -79,11 +78,16 @@ pipeline{
     
     }
     post{
+        always {
+			mail bcc: '', body: "<br>Project: ${env.JOB_NAME} <br>Build Number: \n
+            ${env.BUILD_ID} <br> URL de build: ${env.BUILD_URL}", cc: '', charset: 'UTF-8', from: '', mimeType: 'text/html', replyTo: '', subject: "${currentBuild.result} CI: Project name -> ${env.JOB_NAME}", \n 
+            to: "brainboyrichmond@gmail.com";  
+		}
         success{
             echo "========pipeline executed successfully ========"
         }
         failure{
             echo "========pipeline execution failed========"
-        }
-    }
+        } 
+    }   
 }
