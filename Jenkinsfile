@@ -1,10 +1,10 @@
 pipeline{
     agent any 
-    environment{
+    // environment{
         
-        DATREE_TOKEN = credentials('DATREE_TOKEN')
+    //     DATREE_TOKEN = credentials('DATREE_TOKEN')
 
-    }
+    // }
     stages{
         stage("github repo"){
             steps{
@@ -90,8 +90,9 @@ pipeline{
                 //     }
                 // }
                 script{
-                        withEnv(['DATREE_TOKEN=$DATREE_TOKEN']) {
-                              sh 'helm datree test kubernetes/myapp'
+                        withEnv(['DATREE_TOKEN=d35945da-d7af-421e-8397-c50c36aa3c69']) {
+                            //   sh 'datree test kubernetes/myapp'
+                               sh 'datree test *.yaml --only-k8s-files'
                         }
 
                 }
