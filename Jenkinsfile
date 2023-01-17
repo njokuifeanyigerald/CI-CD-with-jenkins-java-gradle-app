@@ -75,14 +75,34 @@ pipeline{
         
             }
         }
+        stage("Datree"){
+            steps{
+                echo "====++++executing Datree++++===="
+                script{
+                    // syntax is  dir: change current directory
+                    dir('kubernetes/') {
+                        sh 'helm datree test myapp/'
+                    }
+                }
+            }
+            post{
+                success{
+                    echo "====++++Datree executed successfully++++===="
+                }
+                failure{
+                    echo "====++++Datree execution failed++++===="
+                }
+        
+            }
+        }
     
     }
     post{
-        always {
-			mail bcc: '', body: "<br>Project: ${env.JOB_NAME} <br>Build Number: ${env.BUILD_NUMBER} <br> URL de build: ${env.BUILD_URL}",
-            cc: '', charset: 'UTF-8', from: '', mimeType: 'text/html', replyTo: '',
-            subject: "${currentBuild.result} CI: Project name -> ${env.JOB_NAME}", to: "brainboyrichmond@gmail.com";  
-		}
+        // always {
+		// 	mail bcc: '', body: "<br>Project: ${env.JOB_NAME} <br>Build Number: ${env.BUILD_NUMBER} <br> URL de build: ${env.BUILD_URL}",
+        //     cc: '', charset: 'UTF-8', from: '', mimeType: 'text/html', replyTo: '',
+        //     subject: "${currentBuild.result} CI: Project name -> ${env.JOB_NAME}", to: "brainboyrichmond@gmail.com";  
+		// }
         success{
             echo "========pipeline executed successfully ========"
         }
