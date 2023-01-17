@@ -89,7 +89,7 @@ pipeline{
                 //         sh 'helm datree test myapp/'
                 //     }
                 // }
-                // script{
+                script{
                         withEnv(['DATREE_TOKEN=$DATREE_TOKEN']) {
                               sh 'helm datree test kubernetes/myapp'
                         }
