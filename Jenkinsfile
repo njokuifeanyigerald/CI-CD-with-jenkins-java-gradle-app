@@ -80,7 +80,7 @@ pipeline{
                 echo "====++++executing Datree++++===="
                 script{
                     // syntax is  dir: change current directory
-                    dir('kubernetes/') {
+                    dir('./kubernetes/') {
                         sh 'helm datree test myapp/'
                     }
                 }
