@@ -79,18 +79,10 @@ pipeline{
             steps{
                 echo "====++++executing Datree++++===="
                 script{
-                   
-                        sh 'helm datree test ./kubernetes/myapp/'
-    
-                }
-                script{
-                        withEnv(['DATREE_TOKEN=d35945da-d7af-421e-8397-c50c36aa3c69']) {
-                            //   sh 'datree test kubernetes/myapp'
-                            //    sh 'datree test *.yaml --only-k8s-files'
-                               sh 'helm datree test *.yaml'
-
-                        }
-
+                    withEnv(['DATREE_TOKEN=d35945da-d7af-421e-8397-c50c36aa3c69']) {
+                        //   sh 'datree test kubernetes/myapp'
+                            sh 'datree test *.yaml --only-k8s-files'
+                    }
                 }
             }
             post{
