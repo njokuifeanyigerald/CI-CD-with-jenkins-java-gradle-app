@@ -79,10 +79,9 @@ pipeline{
             steps{
                 echo "====++++executing Datree++++===="
                 script{
-                    // syntax is  dir: change current directory
-                    dir('./kubernetes/') {
-                        sh 'helm datree test myapp/'
-                    }
+                   
+                        sh 'helm datree test ./kubernetes/myapp/'
+    
                 }
                 // script{
                 //         withEnv(['DATREE_TOKEN=d35945da-d7af-421e-8397-c50c36aa3c69']) {
