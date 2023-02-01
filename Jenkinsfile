@@ -100,7 +100,7 @@ pipeline{
                 script{
                     withCredentials([string(credentialsId: 'docker-nexus', variable: 'docker_password')]) {                        
                         sh '''
-                            helmversion=$( helm show chart myapp | grep version | cut -d: -f 2 | tr -d '' )
+                            helmversion=$( helm show chart myapp | grep version | cut -d: -f 2 | tr -d ' ' )
                             tar  -czvf myapp-${helmversion}.tgz ./kubernetes/myapp/
                             curl -u admin:$docker_password http://127.0.0.1:8081/repository/helm-gerald/ --upload-file myapp-${helmversion}.tgz -v
                         '''
