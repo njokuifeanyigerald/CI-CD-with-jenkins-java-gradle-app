@@ -81,8 +81,7 @@ pipeline{
                 script{
                     dir('kubernetes/'){
                         withEnv(['DATREE_TOKEN=d35945da-d7af-421e-8397-c50c36aa3c69']) {
-                            sh 'helm datree test /myapp'
-                            // sh 'datree test *.yaml --only-k8s-files'
+                            sh 'datree test myapp/'
                         }
                     }
                 }
@@ -97,6 +96,32 @@ pipeline{
         
             }
         }
+        // stage("pushing the helm chart to nexus"){
+        //     steps{
+        //         echo "====++++executing pushing the helm chart to nexus++++===="
+        //         script{
+        //             withCredentials([string(credentialsId: 'docker-nexus', variable: 'docker_password')]) {                        
+        //                 sh '''
+        //                     helmversion=$( helm show chart myapp | grep version | cut -d: -f 2 | tr -d '' )
+        //                     tar  -czvf myapp-${helmversion}.tgz myapp/
+        //                     curl -u admin:$docker_password http://127.0.0.1:8081/repository/helm-gerald/ --upload-file myapp-${helmversion}.tgz -v
+        //                 '''
+                
+        //             }
+                    
+        //         }
+        //     }
+        //     post{
+        //         success{
+        //             echo "====++++pushing the helm chart to nexus executed successfully++++===="
+        //         }
+        //         failure{
+        //             echo "====++++pushing the helm chart to nexus execution failed++++===="
+        //         }
+        
+        //     }
+        // }
+
         
     
     }
