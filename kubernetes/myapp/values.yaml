@@ -6,7 +6,7 @@ replicaCount: 2
 
 image:
   repository: localhost:8083/springapp
-  pullPolicy: IfNotPresent
+  pullPolicy: javaspringboot
   # Overrides the image tag whose default is the chart appVersion.
   tag: IMAGE_TAG
 

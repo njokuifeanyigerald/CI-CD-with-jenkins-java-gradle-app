@@ -59,7 +59,6 @@ pipeline{
                             docker pull localhost:8083/springapp:$BUILD_ID
                         '''
                     }
-                    
                 }
             }
             post{
@@ -69,7 +68,6 @@ pipeline{
                 failure{
                     echo "====++++docker login to nexus  execution failed++++===="
                 }
-        
             }
         }
         stage("Datree"){
@@ -130,14 +128,29 @@ pipeline{
                 }
             }
             post{
-                always{
-                    echo "====++++always++++===="
-                }
                 success{
                     echo "====++++deploying k8s executed successfully++++===="
                 }
                 failure{
                     echo "====++++deploying k8s execution failed++++===="
+                }
+        
+            }
+        }
+
+        stage("checking the deployed app"){
+            steps{
+                echo "====++++executing checking the deployed app++++===="
+                kubeconfig(credentialsId: 'myKubeConfig', serverUrl: 'https://192.168.59.101:8443') {
+                    sh 'kubectl run curl --image=curlimages/curl -i --rm --restart=Never -- curl javaspringboot-myapp:8085'
+                }
+            }
+            post{
+                success{
+                    echo "====++++checking the deployed app executed successfully++++===="
+                }
+                failure{
+                    echo "====++++checking the deployed app execution failed++++===="
                 }
         
             }
