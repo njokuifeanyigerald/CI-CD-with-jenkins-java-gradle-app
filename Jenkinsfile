@@ -126,7 +126,7 @@ pipeline{
                             // sh 'kubectl apply -f kube.yaml'
                             // sh 'kubectl get all'
 
-                            sh 'helm upgrade --install --set image.repository="127.0.0.1:8083/springapp" --set image.tag="${VERSION}" javaspringboot ./kubernetes/myapp/ ' 
+                            sh 'helm upgrade --install --set image.repository="localhost:8083/springapp" --set image.tag="98" javaspringboot ./kubernetes/myapp/ ' 
                     }
                                 
                 }
