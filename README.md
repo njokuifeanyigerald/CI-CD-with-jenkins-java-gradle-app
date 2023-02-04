@@ -23,6 +23,7 @@ code is integrated with sonarqube plugin which help us in static code analysis
 
 ``` ./gradlew sonarqube ```
 
+### it is for the k8s deploy step
 
 **For Creating secret**
 
