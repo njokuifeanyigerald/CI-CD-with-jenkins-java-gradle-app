@@ -22,3 +22,11 @@ when we build the code using command ```./gradlew build ``` it will generate war
 code is integrated with sonarqube plugin which help us in static code analysis 
 
 ``` ./gradlew sonarqube ```
+
+
+**For Creating secret**
+
+*registry secret is used because it is in `deployment.yaml` under imagePullSecrets within the helm chart myapp folder*
+```xml
+kubectl create secret docker-registry registry-secret --docker-server=127.0.0.1:8083 --docker-username=admin --docker-password=nexus --docker-email=<email>
+```
